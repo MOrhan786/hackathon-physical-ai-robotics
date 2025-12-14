@@ -15,7 +15,7 @@ const config: Config = {
 
   // GitHub pages deployment config.
   organizationName: 'MOrhan786',
-  projectName: 'hackathon-physical-ai-robotics',
+  projectName: 'physical-ai-and-humanoid-robotics',
 
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
