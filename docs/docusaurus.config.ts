@@ -11,11 +11,11 @@ const config: Config = {
   // Set the production url of your site here
   url: 'https://MOrhan786.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
-  baseUrl: '/hackathon-physical-ai-robotics-book-data/',
+  baseUrl: '/hackathon-physical-ai-robotics/',
 
   // GitHub pages deployment config.
   organizationName: 'MOrhan786',
-  projectName: 'hackathon-physical-ai-robotics-book-data',
+  projectName: 'hackathon-physical-ai-robotics',
 
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
