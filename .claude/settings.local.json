@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git --version)",
+      "Bash(mkdir -p \"D:\\main-hackathon-folder\\docs\\docs\\physical-ai-and-humanoid-robotics\\docs\\src\\components\\UI\")"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

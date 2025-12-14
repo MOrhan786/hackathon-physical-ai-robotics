@@ -1,0 +1,174 @@
+/* Enhanced Card Component Styles */
+.pai-card {
+  background: var(--ifm-background-surface-color);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: var(--ifm-global-radius);
+  box-shadow: var(--ifm-global-shadow-lw);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+}
+
+/* Hover effect for hoverable cards */
+.pai-card--hoverable:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--ifm-global-shadow-md);
+  border-color: var(--ifm-color-primary-light);
+}
+
+/* Focus state for accessibility */
+.pai-card:focus-within {
+  outline: 2px solid var(--ifm-color-primary);
+  outline-offset: 2px;
+}
+
+/* Elevation variants */
+.pai-card--elevation-sm {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.pai-card--elevation-md {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.pai-card--elevation-lg {
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.pai-card--elevation-xl {
+  box-shadow: 0 20px 25px rgba(0, 0, 0, 0.15), 0 10px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* Variant styles */
+.pai-card--default {
+  background: var(--ifm-background-surface-color);
+  border-color: var(--ifm-color-emphasis-200);
+}
+
+.pai-card--primary {
+  border-left: 4px solid var(--ifm-color-primary);
+}
+
+.pai-card--secondary {
+  border-left: 4px solid var(--pai-color-secondary);
+}
+
+.pai-card--success {
+  border-left: 4px solid var(--pai-color-success);
+}
+
+.pai-card--warning {
+  border-left: 4px solid var(--pai-color-warning);
+}
+
+.pai-card--danger {
+  border-left: 4px solid var(--pai-color-error);
+}
+
+/* Card Header */
+.pai-card__header {
+  padding: var(--pai-spacing-lg);
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pai-card__header:last-child {
+  border-bottom: none;
+}
+
+/* Card Body */
+.pai-card__body {
+  padding: var(--pai-spacing-lg);
+  flex: 1 1 auto;
+}
+
+/* Card Footer */
+.pai-card__footer {
+  padding: var(--pai-spacing-lg);
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+  display: flex;
+  align-items: center;
+}
+
+.pai-card__footer:first-child {
+  border-top: none;
+}
+
+/* Card Media */
+.pai-card__media {
+  overflow: hidden;
+}
+
+.pai-card__media img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.pai-card--hoverable:hover .pai-card__media img {
+  transform: scale(1.05);
+}
+
+/* Content spacing within cards */
+.pai-card__header + .pai-card__body {
+  padding-top: 0;
+}
+
+.pai-card__body + .pai-card__footer {
+  padding-top: 0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .pai-card {
+    margin: 0 var(--pai-spacing-sm);
+  }
+
+  .pai-card__header,
+  .pai-card__body,
+  .pai-card__footer {
+    padding: var(--pai-spacing-md);
+  }
+
+  .pai-card--hoverable:hover {
+    transform: translateY(-2px);
+  }
+}
+
+/* Animation for card entrance */
+.pai-card {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.pai-card[data-animated='false'] {
+  opacity: 1;
+  transform: translateY(0);
+  animation: none;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Interactive state */
+.pai-card:active:not(.pai-card--hoverable) {
+  transform: translateY(0);
+}
+
+/* Disabled state */
+.pai-card--disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}

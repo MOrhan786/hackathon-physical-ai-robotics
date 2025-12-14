@@ -1,0 +1,99 @@
+openapi: 3.0.0
+info:
+  title: RAG Chatbot UI Integration API
+  version: 1.0.0
+  description: API contract for the RAG Chatbot Backend as consumed by the Docusaurus UI.
+
+servers:
+  - url: /api
+    description: RAG Chatbot Backend API endpoint
+
+paths:
+  /chat:
+    post:
+      summary: Send a chat message to the RAG chatbot and receive a streaming response.
+      operationId: postChatMessage
+      requestBody:
+        description: Chat message request payload
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - message
+              properties:
+                message:
+                  type: string
+                  description: The user's current message to the chatbot.
+                  example: "What is Physical AI?"
+                history:
+                  type: array
+                  description: A list of previous chat messages to provide conversational context.
+                  items:
+                    type: object
+                    properties:
+                      text:
+                        type: string
+                        example: "Hello"
+                      sender:
+                        type: string
+                        enum: [user, bot]
+                        example: "user"
+                      timestamp:
+                        type: string
+                        format: date-time
+                        example: "2023-10-27T10:00:00Z"
+                selected_text:
+                  type: string
+                  nullable: true
+                  description: Optional text selected by the user from the documentation to provide additional context.
+                  example: "Physical AI refers to..."
+      responses:
+        '200':
+          description: A streaming response from the chatbot (Server-Sent Events). Each event will contain a chunk of the AI's response.
+          content:
+            text/event-stream:
+              schema:
+                type: string
+                description: Stream of text chunks.
+                example: "data: This is a response chunk\n\ndata: Another chunk\n\n"
+        '400':
+          description: Bad Request - Invalid input or missing required fields.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    example: "Invalid message format"
+        '401':
+          description: Unauthorized - Missing or invalid API key.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    example: "Invalid API Key"
+        '500':
+          description: Internal Server Error - An unexpected error occurred on the backend.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    example: "Internal server error"
+security:
+  - ApiKeyAuth: []
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key # The header name the backend expects

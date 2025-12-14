@@ -1,0 +1,402 @@
+/* src/pages/index.module.css */
+
+.main {
+  overflow: hidden; /* To contain background globs */
+  padding-top: 0; /* Remove top padding since HomepageHero handles its own spacing */
+}
+
+/* ============================================
+   MODULES - Bento Grid Style
+   ============================================ */
+.modules {
+  padding: 5rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Add subtle entrance animation for the modules section */
+.modules::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--ifm-color-primary), transparent);
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 4rem; /* Increased spacing for better visual breathing room */
+  position: relative;
+}
+
+.sectionHeader::after {
+  content: '';
+  position: absolute;
+  bottom: -1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: var(--ifm-color-primary);
+  border-radius: 2px;
+}
+
+.sectionHeader h2 {
+  font-size: var(--pai-font-size-3xl);
+  font-weight: 700;
+  margin-bottom: var(--pai-spacing-md);
+  position: relative;
+}
+
+.sectionHeader p {
+  font-size: var(--pai-font-size-lg);
+  color: var(--pai-color-text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.moduleGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--pai-spacing-xl); /* Increased gap for better visual breathing room */
+  position: relative;
+}
+
+/* Add a subtle entrance animation for the grid */
+.moduleGrid::before {
+  content: '';
+  position: absolute;
+  top: -2rem;
+  left: -2rem;
+  right: -2rem;
+  bottom: -2rem;
+  background: radial-gradient(circle at center, rgba(var(--ifm-color-primary-rgb), 0.05) 0%, transparent 70%);
+  z-index: -1;
+  opacity: 0;
+  animation: fadeIn 1s ease-out 0.2s forwards;
+}
+
+.moduleCard {
+  background: var(--ifm-background-surface-color);
+  padding: var(--pai-spacing-xl);
+  border-radius: 16px;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s ease-out forwards;
+  z-index: 1; /* Ensure cards appear above the grid background effect */
+}
+
+.moduleCard:nth-child(1) { animation-delay: 0.1s; }
+.moduleCard:nth-child(2) { animation-delay: 0.2s; }
+.moduleCard:nth-child(3) { animation-delay: 0.3s; }
+.moduleCard:nth-child(4) { animation-delay: 0.4s; }
+
+.moduleCard:hover {
+  transform: translateY(-8px) scale(1.02); /* Slightly scale up for more impact */
+  box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15);
+  border-color: var(--ifm-color-primary-light);
+  text-decoration: none;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Top colored line on cards */
+.moduleCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--ifm-color-primary), var(--ifm-color-primary-light));
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.moduleCard:hover::before {
+  opacity: 1;
+}
+
+.moduleNumber {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--ifm-color-emphasis-200);
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  opacity: 0.5;
+}
+
+.moduleTitle {
+  font-size: var(--pai-font-size-xl);
+  font-weight: 700;
+  color: var(--ifm-heading-color);
+  margin-bottom: var(--pai-spacing-sm);
+  position: relative;
+}
+
+.moduleSubtitle {
+  font-size: var(--pai-font-size-base);
+  color: var(--ifm-color-primary);
+  font-weight: 600;
+  margin-bottom: var(--pai-spacing-sm);
+}
+
+.moduleDescription {
+  color: var(--pai-color-text-secondary);
+  font-size: var(--pai-font-size-base);
+  line-height: 1.6;
+}
+
+/* ============================================
+   FEATURES SECTION
+   ============================================ */
+.features {
+  padding: 6rem 2rem;
+  background: var(--ifm-color-emphasis-100);
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Add subtle background effect for the features section */
+.features::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, rgba(var(--ifm-color-primary-rgb), 0.03) 0%, transparent 80%);
+  z-index: 0;
+  opacity: 0;
+  animation: fadeIn 1s ease-out 0.4s forwards;
+}
+
+.featureGrid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--pai-spacing-2xl);
+  position: relative;
+  z-index: 1; /* Ensure content appears above background effect */
+}
+
+.featureCard {
+  background: transparent;
+  padding: 0;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s ease-out 0.5s forwards;
+  position: relative;
+  z-index: 2; /* Ensure cards appear above background effects */
+}
+
+.featureCard:nth-child(1) { animation-delay: 0.5s; }
+.featureCard:nth-child(2) { animation-delay: 0.6s; }
+.featureCard:nth-child(3) { animation-delay: 0.7s; }
+
+.featureIcon {
+  width: 60px;
+  height: 60px;
+  background: white;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  box-shadow: var(--ifm-global-shadow-md);
+  margin: 0 auto var(--pai-spacing-lg);
+  transition: all 0.3s ease;
+}
+
+[data-theme='dark'] .featureIcon {
+  background: #2d3748;
+}
+
+.featureCard:hover .featureIcon {
+  transform: translateY(-5px);
+  box-shadow: var(--ifm-global-shadow-xl);
+}
+
+.featureCard h3 {
+  font-size: var(--pai-font-size-xl);
+  font-weight: 600;
+  margin-bottom: var(--pai-spacing-sm);
+}
+
+.featureCard p {
+  color: var(--pai-color-text-secondary);
+  font-size: var(--pai-font-size-base);
+  line-height: 1.6;
+}
+
+/* ============================================
+   CTA SECTION
+   ============================================ */
+.cta {
+  padding: 5rem 2rem;
+  text-align: center;
+  background: linear-gradient(135deg, var(--ifm-color-primary) 0%, var(--ifm-color-primary-darker) 100%);
+  color: white;
+  margin-top: 4rem; /* Increased margin for better visual separation */
+  opacity: 0;
+  animation: fadeIn 0.8s ease-out 0.8s forwards;
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px; /* Add subtle border radius for modern look */
+}
+
+/* Add subtle background pattern for the CTA section */
+.cta::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.1;
+  animation: float 20s linear infinite;
+  z-index: 0;
+}
+
+.ctaContent {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(10px, 10px);
+  }
+}
+
+.ctaContent h2 {
+  font-size: var(--pai-font-size-3xl);
+  font-weight: 700;
+  margin-bottom: var(--pai-spacing-md);
+  position: relative;
+}
+
+.ctaContent p {
+  font-size: var(--pai-font-size-lg);
+  margin-bottom: var(--pai-spacing-xl);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  opacity: 0.9;
+  position: relative;
+}
+
+.ctaButton {
+  display: inline-block;
+  background: white;
+  color: var(--ifm-color-primary);
+  padding: var(--pai-spacing-md) var(--pai-spacing-xl);
+  border-radius: 50px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 1;
+}
+
+.ctaButton:hover {
+  background: var(--pai-color-background-elevated);
+  transform: translateY(-3px) scale(1.05); /* Enhanced hover effect */
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  text-decoration: none;
+  color: var(--ifm-color-primary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .main {
+    padding-top: 0;
+  }
+
+  .modules {
+    padding: 3rem 1rem;
+  }
+
+  .sectionHeader {
+    margin-bottom: 2.5rem;
+  }
+
+  .sectionHeader::after {
+    width: 40px;
+    bottom: -0.5rem;
+  }
+
+  .featureGrid {
+    grid-template-columns: 1fr;
+    gap: var(--pai-spacing-xl);
+  }
+
+  .moduleGrid {
+    grid-template-columns: 1fr;
+    gap: var(--pai-spacing-lg);
+  }
+
+  .moduleGrid::before {
+    display: none; /* Hide background effect on mobile for performance */
+  }
+
+  .sectionHeader h2 {
+    font-size: var(--pai-font-size-2xl);
+  }
+
+  .sectionHeader p {
+    font-size: var(--pai-font-size-base);
+  }
+
+  .features {
+    padding: 4rem 1rem;
+  }
+
+  .cta {
+    padding: 3rem 1rem;
+    margin-top: 3rem;
+    border-radius: 16px; /* Adjust border radius for mobile */
+  }
+
+  .cta::before {
+    display: none; /* Hide background pattern on mobile for performance */
+  }
+
+  .moduleCard:hover {
+    transform: translateY(-5px) scale(1.01); /* Subtle hover effect for mobile */
+  }
+
+  .featureCard:hover .featureIcon {
+    transform: translateY(-3px); /* Subtle hover effect for mobile */
+  }
+}

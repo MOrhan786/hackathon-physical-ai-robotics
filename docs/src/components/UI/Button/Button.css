@@ -1,0 +1,227 @@
+/* Enhanced Button Component Styles */
+.pai-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+  overflow: hidden;
+  outline: none;
+  border-radius: 8px;
+  font-family: inherit;
+  text-align: center;
+  vertical-align: middle;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+/* Focus states for accessibility */
+.pai-button:focus-visible {
+  outline: 2px solid var(--ifm-color-primary);
+  outline-offset: 2px;
+}
+
+/* Size variants */
+.pai-button--sm {
+  padding: 0.5rem 1rem;
+  font-size: var(--pai-font-size-sm);
+  min-height: 32px;
+}
+
+.pai-button--md {
+  padding: 0.75rem 1.5rem;
+  font-size: var(--pai-font-size-base);
+  min-height: 40px;
+}
+
+.pai-button--lg {
+  padding: 1rem 2rem;
+  font-size: var(--pai-font-size-lg);
+  min-height: 48px;
+}
+
+.pai-button--xl {
+  padding: 1.25rem 2.5rem;
+  font-size: var(--pai-font-size-xl);
+  min-height: 56px;
+}
+
+/* Full width */
+.pai-button--full-width {
+  width: 100%;
+}
+
+/* Primary variant */
+.pai-button--primary {
+  background: var(--ifm-color-primary);
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.pai-button--primary:hover:not(.pai-button--disabled) {
+  background: var(--ifm-color-primary-darker);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.pai-button--primary:active:not(.pai-button--disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Secondary variant */
+.pai-button--secondary {
+  background: transparent;
+  color: var(--ifm-color-primary);
+  border: 2px solid var(--ifm-color-primary);
+}
+
+.pai-button--secondary:hover:not(.pai-button--disabled) {
+  background: var(--ifm-color-primary);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pai-button--secondary:active:not(.pai-button--disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Outline variant */
+.pai-button--outline {
+  background: transparent;
+  color: var(--ifm-color-primary);
+  border: 2px solid var(--ifm-color-primary);
+}
+
+.pai-button--outline:hover:not(.pai-button--disabled) {
+  background: var(--ifm-color-primary);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pai-button--outline:active:not(.pai-button--disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Ghost variant */
+.pai-button--ghost {
+  background: transparent;
+  color: var(--ifm-color-primary);
+  border: 2px solid transparent;
+}
+
+.pai-button--ghost:hover:not(.pai-button--disabled) {
+  background: var(--ifm-color-emphasis-200);
+  transform: translateY(-1px);
+}
+
+.pai-button--ghost:active:not(.pai-button--disabled) {
+  transform: translateY(0);
+}
+
+/* Danger variant */
+.pai-button--danger {
+  background: var(--ifm-color-danger);
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.pai-button--danger:hover:not(.pai-button--disabled) {
+  background: var(--ifm-color-danger-darker);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.pai-button--danger:active:not(.pai-button--disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Disabled state */
+.pai-button--disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.pai-button--disabled:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Animation for button press effect */
+.pai-button:active:not(.pai-button--disabled)::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+/* Loading state */
+.pai-button--loading {
+  position: relative;
+  pointer-events: none;
+}
+
+.pai-button--loading::before {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  margin-left: -20px;
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: buttonSpinner 0.8s linear infinite;
+}
+
+@keyframes buttonSpinner {
+  from {
+    transform: rotate(0turn);
+  }
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .pai-button--sm {
+    padding: 0.4rem 0.8rem;
+    font-size: var(--pai-font-size-sm);
+    min-height: 30px;
+  }
+
+  .pai-button--md {
+    padding: 0.65rem 1.2rem;
+    font-size: var(--pai-font-size-base);
+    min-height: 36px;
+  }
+
+  .pai-button--lg {
+    padding: 0.85rem 1.6rem;
+    font-size: var(--pai-font-size-lg);
+    min-height: 42px;
+  }
+
+  .pai-button--xl {
+    padding: 1rem 2rem;
+    font-size: var(--pai-font-size-xl);
+    min-height: 48px;
+  }
+}
