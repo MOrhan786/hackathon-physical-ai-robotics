@@ -14,7 +14,7 @@ links:
   spec: "specs/1-docusaurus-ui-architecture/spec.md"
   ticket: null
   adr: null
-  pr: "https://github.com/BismaYousuf"
+  pr: "https://github.com/MOrhan786"
 files:
 - " - .claude/agents/docusaurus-architect-specialist.md"
 - " - .specify/memory/constitution.md"
@@ -48,7 +48,7 @@ It appears the GitHub CLI (`gh`) is not available in this environment, so I coul
 🔴 **Action Required:**
 
 You can create the pull request manually by visiting this URL:
-[https://github.com/BismaYousuf](https://github.com/BismaYousuf)
+[https://github.com/MOrhan786](https://github.com/MOrhan786)
 
 ## Outcome
 

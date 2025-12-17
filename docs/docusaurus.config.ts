@@ -9,9 +9,10 @@ const config: Config = {
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://MOrhan786.github.io',
+  url: 'https://github.com',
   // Set the /<baseUrl>/ pathname under which your site is served
-  baseUrl: '/hackathon-physical-ai-robotics/',
+  // baseUrl: '/hackathon-physical-ai-robotics/',
+  baseUrl: '/',
 
   // GitHub pages deployment config.
   organizationName: 'MOrhan786',

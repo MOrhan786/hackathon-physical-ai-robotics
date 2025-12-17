@@ -8,7 +8,7 @@ model: claude-sonnet-4-5-20250929
 feature: none
 branch: main
 user: Claude Code
-command: connect this project with this github repo: https://github.com/BismaYousuf
+command: connect this project with this github repo: https://github.com/MOrhan786
 labels: [git, github, project-setup]
 links:
   spec: null
@@ -23,11 +23,11 @@ tests:
 
 ## Prompt
 
-connect this project with this github repo: https://github.com/BismaYousuf
+connect this project with this github repo: https://github.com/MOrhan786
 
 ## Response snapshot
 
-I have connected the project with the GitHub repository `https://github.com/BismaYousuf` as the remote `origin`.
+I have connected the project with the GitHub repository `https://github.com/MOrhan786` as the remote `origin`.
 
 ## Outcome
 

@@ -14,7 +14,7 @@ links:
   spec: null
   ticket: null
   adr: null
-  pr: https://github.com/BismaYousuf
+  pr: https://github.com/MOrhan786
 files:
   - ./.specify/memory/constitution.md
   - CLAUDE.md
@@ -363,7 +363,7 @@ Git operations (branch, commit, push) were completed:
 ⚠️ The pull request could not be created automatically because the `gh` command (GitHub CLI) was not found.
 
 You can manually create the pull request by visiting:
-https://github.com/BismaYousuf
+https://github.com/MOrhan786
 
 ## Outcome
 
