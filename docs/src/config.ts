@@ -10,11 +10,11 @@ export function useApiConfig() {
   };
   
   return {
-    apiUrl: customFields?.apiUrl || 'https://ai-rative-book-backend-production.up.railway.app',
+    apiUrl: customFields?.apiUrl || 'hackathon-physical-ai-robotics-production.up.railway.app',
     apiKey: customFields?.apiKey || '',
   };
 }
 
 // For use outside React components (fallback values)
-export const API_URL = 'https://ai-rative-book-backend-production.up.railway.app';
+export const API_URL = 'hackathon-physical-ai-robotics-production.up.railway.app';
 export const API_KEY = '';
