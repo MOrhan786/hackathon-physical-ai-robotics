@@ -16,5 +16,5 @@ export function useApiConfig() {
 }
 
 // For use outside React components (fallback values)
-export const API_URL = 'https://hackathon-physical-ai-robotics-production.up.railway.app';
+export const API_URL = 'https://hackathon-physical-ai-robotics-production.up.railway.app/api';
 export const API_KEY = '';

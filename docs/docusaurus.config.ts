@@ -32,7 +32,7 @@ const config: Config = {
 
   // Custom fields for API configuration (used in your hooks)
   customFields: {
-    apiUrl: process.env.REACT_APP_API_URL || 'https://hackathon-physical-ai-robotics-production.up.railway.app',
+    apiUrl: process.env.REACT_APP_API_URL || 'https://hackathon-physical-ai-robotics-production.up.railway.app/api',
     apiKey: process.env.REACT_APP_API_KEY || '',
   },
 

@@ -4,7 +4,7 @@ import useIsBrowser from '@docusaurus/useIsBrowser';
 import { JSX } from 'react/jsx-runtime';
 
 // API Configuration
-const API_URL = 'https://hackathon-physical-ai-robotics-production.up.railway.app>/api';
+const API_URL = 'https://hackathon-physical-ai-robotics-production.up.railway.app/api';
 // const API_KEY = 'orhan1234'
 // Helper function for mobile-friendly fetch with timeout
 async function fetchWithTimeout(
