@@ -1,3 +1,4 @@
+# src\api\chat.py
 from fastapi import APIRouter, Depends, Header
 from fastapi.responses import StreamingResponse
 from sse_starlette.sse import EventSourceResponse

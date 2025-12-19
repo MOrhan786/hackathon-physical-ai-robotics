@@ -1,6 +1,7 @@
+# src/api/content.py
 """
 Content personalization and translation API endpoints.
-Uses Gemini's OpenAI-compatible endpoint.
+Uses OpenAI's GPT-4o-mini model.
 """
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel, Field
@@ -11,10 +12,10 @@ from src.core.config import settings
 
 router = APIRouter()
 
-# Use Gemini's OpenAI-compatible endpoint (from pyepicodyssey)
+# --- FIX: Switch to Standard OpenAI Client ---
 client = OpenAI(
-    api_key=settings.GEMINI_API_KEY,
-    base_url=settings.GEMINI_BASE_URL
+    api_key=settings.OPENAI_API_KEY
+    # base_url ki ab zaroorat nahi, ye original OpenAI par jayega
 )
 
 
@@ -68,12 +69,6 @@ class TranslateResponse(BaseModel):
 async def personalize_content(request: PersonalizeRequest):
     """
     Personalize chapter content based on user's background.
-    
-    Adapts the content complexity and examples based on:
-    - Programming experience level
-    - Robotics experience level
-    - Known programming languages
-    - Available hardware
     """
     try:
         # Build personalization prompt
@@ -99,7 +94,7 @@ Guidelines:
 - Preserve markdown formatting"""
 
         response = client.chat.completions.create(
-            model="gemini-2.0-flash",
+            model="gpt-4o-mini",  # FIX: Switched to OpenAI model
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": f"{background_summary}\n\nContent to personalize:\n\n{request.content}"}
@@ -124,8 +119,6 @@ Guidelines:
 async def translate_content(request: TranslateRequest):
     """
     Translate chapter content to the target language (default: Urdu).
-    
-    Maintains technical accuracy while providing natural translations.
     """
     try:
         system_prompt = f"""You are an expert translator specializing in technical and educational content.
@@ -134,19 +127,19 @@ Translate the following content to {request.target_language}.
 CRITICAL GUIDELINES:
 - Translate ONLY the text content, NOT the markdown formatting
 - DO NOT include any markdown syntax in your translation (no #, **, `, etc.)
-- Return plainshould remain in English (programming code)
-- Translate comments in code blocks
+- Programming code should remain in English
+- Translate comments in code blocks if helpful
 - Keep proper nouns and brand names (ROS 2, NVIDIA Isaac, etc.) in English
 - Ensure the translation reads naturally in {request.target_language}
 - For Urdu: Use proper Urdu script and right-to-left text flow"""
 
         response = client.chat.completions.create(
-            model="gemini-2.0-flash",
+            model="gpt-4o-mini",  # FIX: Switched to OpenAI model
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": f"Translate to {request.target_language}:\n\n{request.content}"}
             ],
-            temperature=0.3,  # Lower temperature for more consistent translations
+            temperature=0.3,
             max_tokens=8000
         )
         

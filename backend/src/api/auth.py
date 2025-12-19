@@ -1,3 +1,4 @@
+# src\api\auth.py
 """
 Better-Auth compatible authentication API endpoints.
 Implements signup/signin with user background collection.

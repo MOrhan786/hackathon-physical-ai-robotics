@@ -1,3 +1,4 @@
+# src\api\ingest.py
 from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks
 from starlette.responses import JSONResponse
 import os
@@ -18,8 +19,11 @@ async def ingest_documents(background_tasks: BackgroundTasks):
     """
     
     # Determine the path to the docs/docs directory
+    # Determine the path to the docs directory
     current_dir = os.path.dirname(os.path.abspath(__file__))
-    textbook_docs_path = os.path.join(current_dir, "..", "..", "..", "docs", "docs")
+    
+    # FIX: Sirf 2 baar piche jayen (api -> src -> root) aur ek baar docs mein
+    textbook_docs_path = os.path.join(current_dir, "..", "..", "docs")
 
     if not os.path.exists(textbook_docs_path):
         raise HTTPException(status_code=404, detail=f"Document path not found: {textbook_docs_path}")

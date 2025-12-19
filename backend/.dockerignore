@@ -1,3 +1,4 @@
+# .dockerignore
 # Ignore Git and editor-specific files
 .git
 .vscode/

@@ -1,3 +1,4 @@
+<!-- README.md -->
 # RAG Chatbot Backend
 
 This is the backend service for the RAG Chatbot, built with FastAPI. It handles document ingestion, vector embedding, Qdrant interaction, and chat responses using the OpenAI API.

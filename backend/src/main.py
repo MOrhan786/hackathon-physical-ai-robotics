@@ -1,3 +1,4 @@
+# src\main.py
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from src.api.ingest import router as ingest_router
@@ -10,12 +11,12 @@ app = FastAPI(title="Physical AI Textbook RAG Chatbot")
 # CORS middleware for frontend integration - configured for mobile browser compatibility
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins for mobile compatibility
-    allow_credentials=False,  # Must be False when allow_origins is "*"
-    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allow_headers=["Content-Type", "X-API-Key", "X-User-ID", "X-Current-Page", "Accept", "Origin"],
+    allow_origins=["*"],  # Allow all origins
+    allow_credentials=False,
+    allow_methods=["*"],  # Sab methods allow karein (GET, POST, OPTIONS, etc.)
+    allow_headers=["*"],  # <--- YEH HAI FIX (Sab headers allow karein)
     expose_headers=["Content-Type", "Content-Length"],
-    max_age=86400,  # Cache preflight requests for 24 hours
+    max_age=86400,
 )
 
 app.include_router(ingest_router, prefix="/api")

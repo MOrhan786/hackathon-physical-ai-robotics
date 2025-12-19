@@ -1,3 +1,4 @@
+# src\services\chat_service.py
 from typing import List, Dict, AsyncGenerator, Optional
 from openai import OpenAI
 from openai.types.chat import ChatCompletionMessageParam
@@ -11,8 +12,8 @@ class ChatService:
         self.openai_client = OpenAI(api_key=settings.OPENAI_API_KEY)
         self.embedding_service = EmbeddingService()
         self.vector_store_service = VectorStoreService()
-        self.chat_model = "gpt-4o" # Using gpt-4o as it's a capable model
-
+        self.chat_model = "gpt-4o-mini" 
+        
     async def chat_stream(self, user_message: str, history: List[Dict[str, str]], selected_text: Optional[str] = None) -> AsyncGenerator[str, None]:
         # 1. Create a vector from the user message (include selected text if provided)
         search_query = user_message

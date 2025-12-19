@@ -1,3 +1,4 @@
+# tests\test_chat_logging.py
 """
 Property-based tests for chat logging functionality.
 

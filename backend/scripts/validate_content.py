@@ -1,3 +1,4 @@
+# scripts\validate_content.py
 #!/usr/bin/env python3
 """
 Content validation script for Physical AI & Humanoid Robotics textbook.
