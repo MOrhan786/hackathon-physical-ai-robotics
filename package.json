@@ -1,0 +1,23 @@
+{
+  "name": "physical-ai-and-humanoid-robotics",
+  "version": "1.0.0",
+  "description": "An interactive educational platform for learning Physical AI and Humanoid Robotics, featuring a Docusaurus-based textbook with an integrated RAG-powered AI chatbot.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MOrhan786/hackathon-physical-ai-robotics.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MOrhan786/hackathon-physical-ai-robotics/issues"
+  },
+  "homepage": "https://github.com/MOrhan786/hackathon-physical-ai-robotics#readme"
+}
