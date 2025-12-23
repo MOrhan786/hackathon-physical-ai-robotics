@@ -14,6 +14,7 @@ interface Message {
   timestamp: Date;
   redirect?: string; // Optional redirect URL
   redirectStatus?: 'pending' | 'navigating' | 'done'; // Redirect status for UI
+  isThinking?: boolean;
 }
 
 interface ChatPanelProps {
@@ -23,19 +24,22 @@ interface ChatPanelProps {
 }
 
 type PanelSize = 'small' | 'medium' | 'large';
-// -------------------------------------------------
-// API Configuration
+
+
 // -------------------------------------------------------------------------
 // API Configuration
-let API_URL = 'web-production-e1ceb.up.railway.app';
+let API_URL = 'https://simple-hackathon-physical-ai-and-humanoid-roboti-production.up.railway.app' ;
 
 // Agar browser mein 'localhost' likha hai, to Local Backend use karo
 if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
   API_URL = 'http://localhost:8000';
 }
 
- const API_KEY = 'orhan1234'
-// ========================================================
+const API_KEY = 'password123';
+// -------------------------------------------------------------------------
+
+
+
 // Regex to detect redirect commands in response
 const REDIRECT_REGEX = /\[\[REDIRECT:([^\]]+)\]\]/;
 
@@ -146,199 +150,63 @@ export default function ChatPanel({ isOpen, onClose, selectedText }: ChatPanelPr
       timestamp: new Date(),
     };
 
-    setMessages(prev => [...prev, userMessage]);
+    const thinkingMessage: Message = {
+      id: `thinking-${Date.now()}`,
+      role: 'assistant',
+      content: 'Thinking...',
+      timestamp: new Date(),
+      isThinking: true,
+    };
+
+    setMessages(prev => [...prev, userMessage, thinkingMessage]);
     setInput('');
     setIsLoading(true);
     setError(null);
 
-    // Prepare chat history for API
-    const chatHistory = messages.map(m => ({
-      user_message: m.role === 'user' ? m.content : '',
-      ai_response: m.role === 'assistant' ? m.content : '',
-    })).filter(h => h.user_message || h.ai_response);
-
     try {
-      // Build headers with user context for personalization
-      const headers: Record<string, string> = {
-        'Content-Type': 'application/json',
-        'X-API-Key': API_KEY,
-      };
-      
-      // Add user ID if authenticated for personalized responses
-      if (isAuthenticated && user?.id) {
-        headers['X-User-ID'] = user.id;
-      }
-      
-      // Add current page context so the bot knows where the user is
-      if (typeof window !== 'undefined') {
-        headers['X-Current-Page'] = window.location.href;
-      }
-
       const response = await fetchWithTimeout(`${API_URL}/api/chat`, {
         method: 'POST',
-        headers: {
-          ...headers,
-          'Connection': 'keep-alive', // Keep connection alive for SSE
-          'Cache-Control': 'no-cache', // Prevent caching of SSE stream
+        headers: { 
+          'Content-Type': 'application/json', 
+          'X-API-Key': API_KEY 
         },
         body: JSON.stringify({
           message: input,
-          history: chatHistory,
+          history: messages
+            .filter(m => !m.isThinking)
+            .map(m => ({
+              user_message: m.role === 'user' ? m.content : '',
+              ai_response: m.role === 'assistant' ? m.content : '',
+            }))
+            .filter(h => h.user_message || h.ai_response),
           selected_text: selectedText || null,
         }),
-      }, 90000); // 90 second timeout for long responses
+      });
 
       if (!response.ok) {
         throw new Error(`API error: ${response.status}`);
       }
 
-      // Handle SSE streaming with error recovery
-      const reader = response.body?.getReader();
-      const decoder = new TextDecoder();
-      let assistantContent = '';
-
-      const assistantMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        role: 'assistant',
-        content: '',
-        timestamp: new Date(),
-      };
-
-      setMessages(prev => [...prev, assistantMessage]);
-
-      if (reader) {
-        try {
-          while (true) {
-            let readResult;
-            try {
-              readResult = await reader.read();
-            } catch (readError) {
-              console.error('Stream read error:', readError);
-              // If we got some content, keep it; otherwise show error
-              if (!assistantContent) {
-                throw new Error('Connection interrupted. Please try again.');
+      const data = await response.json();
+      
+      // Replace thinking message with actual response
+      setMessages(prev => 
+        prev.map(msg => 
+          msg.id === thinkingMessage.id 
+            ? {
+                ...msg,
+                id: Date.now().toString(),
+                content: data.response,
+                isThinking: false,
               }
-              break; // Exit gracefully if we have partial content
-            }
-            
-            const { done, value } = readResult;
-            if (done) break;
+            : msg
+        )
+      );
 
-            const chunk = decoder.decode(value, { stream: true });
-            // Parse SSE data
-            const lines = chunk.split('\n');
-            for (const line of lines) {
-              if (line.startsWith('data: ')) {
-                const data = line.slice(6);
-                if (data && data !== '[DONE]') {
-                  assistantContent += data;
-                  
-                  // Check for redirect command
-                  const redirectMatch = assistantContent.match(REDIRECT_REGEX);
-                  let displayContent = assistantContent;
-                  let redirectUrl: string | undefined;
-                  
-                  if (redirectMatch) {
-                    redirectUrl = redirectMatch[1];
-                    // Remove the redirect command from displayed content
-                    displayContent = assistantContent.replace(REDIRECT_REGEX, '').trim();
-                  }
-                  
-                  setMessages(prev => 
-                    prev.map(m => 
-                      m.id === assistantMessage.id 
-                        ? { ...m, content: displayContent, redirect: redirectUrl, redirectStatus: redirectUrl ? 'pending' : undefined }
-                        : m
-                    )
-                  );
-                }
-              }
-            }
-          }
-        } catch (streamError) {
-          console.error('Streaming error:', streamError);
-          // Only throw if we have no content at all
-          if (!assistantContent) {
-            throw streamError;
-          }
-        } finally {
-          // Always release the reader
-          try {
-            reader.releaseLock();
-          } catch (e) {
-            // Ignore lock release errors
-          }
-        }
-        
-        // After streaming is complete, check if we need to redirect
-        const finalRedirectMatch = assistantContent.match(REDIRECT_REGEX);
-        if (finalRedirectMatch) {
-          const redirectUrl = finalRedirectMatch[1];
-          
-          // Update status to navigating
-          setMessages(prev => 
-            prev.map(m => 
-              m.id === assistantMessage.id 
-                ? { ...m, redirectStatus: 'navigating' }
-                : m
-            )
-          );
-          
-          // Delay redirect so user can see the message, then navigate
-          setTimeout(() => {
-            // Update status to done before navigating
-            setMessages(prev => 
-              prev.map(m => 
-                m.id === assistantMessage.id 
-                  ? { ...m, redirectStatus: 'done' }
-                  : m
-              )
-            );
-            
-            // Parse the redirect URL to separate path and anchor
-            const [path, anchor] = redirectUrl.split('#');
-            
-            // Use Docusaurus router for navigation with proper baseUrl
-            // Construct the full URL with baseUrl prefix
-            const fullPath = baseUrl.endsWith('/') 
-              ? baseUrl.slice(0, -1) + path 
-              : baseUrl + path;
-            
-            // Navigate to the page with anchor for highlighting
-            const fullUrl = anchor ? `${fullPath}#${anchor}` : fullPath;
-            routerHistory.push(fullUrl);
-            
-            // If there's an anchor, scroll to it after a short delay
-            if (anchor) {
-              setTimeout(() => {
-                const element = document.getElementById(anchor);
-                if (element) {
-                  element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-              }, 500);
-            }
-          }, 2000);
-        }
-      }
     } catch (err) {
-      let errorMessage = 'Failed to send message';
-      
-      if (err instanceof Error) {
-        errorMessage = err.message;
-        
-        // Provide more helpful messages for common SSL/connection errors
-        if (errorMessage.includes('SSL') || errorMessage.includes('certificate')) {
-          errorMessage = 'Connection security error. Please refresh the page and try again.';
-        } else if (errorMessage.includes('interrupted') || errorMessage.includes('closed')) {
-          errorMessage = 'Connection was interrupted. Please try again.';
-        }
-      }
-      
-      setError(errorMessage);
-      console.error('Chat error:', err);
-      
-      // Remove the failed assistant message placeholder if it exists
-      setMessages(prev => prev.filter(m => m.role !== 'assistant' || m.content !== ''));
+      setError(err instanceof Error ? err.message : 'Failed to send message');
+      // Remove the thinking message on error
+      setMessages(prev => prev.filter(msg => msg.id !== thinkingMessage.id));
     } finally {
       setIsLoading(false);
     }
