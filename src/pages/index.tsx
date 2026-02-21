@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 import Layout from '@theme/Layout';
 import styles from './index.module.css';
 
@@ -43,6 +44,9 @@ function useTypewriter(texts: string[], typingSpeed = 80, deletingSpeed = 40, pa
 
 function HeroSection() {
   const typewriterText = useTypewriter(typewriterTexts);
+  const heroVideoSrc = useBaseUrl('/videos/robotics.mp4');
+  const heroVideoWebm = useBaseUrl('/videos/robotics.webm');
+  const heroPoster = useBaseUrl('/img/ai-logo.svg');
 
   return (
     <section className={styles.hero}>
@@ -81,10 +85,10 @@ function HeroSection() {
               loop
               playsInline
               className={styles.video}
-              poster="/img/ai-logo.svg"
+              poster={heroPoster}
             >
-              <source src="/videos/robotics.mp4" type="video/mp4" />
-              <source src="/videos/robotics.webm" type="video/webm" />
+              <source src={heroVideoSrc} type="video/mp4" />
+              <source src={heroVideoWebm} type="video/webm" />
             </video>
           </div>
         </div>
@@ -128,6 +132,31 @@ const modules = [
   },
 ];
 
+function ModuleCard({ module }: { module: typeof modules[0] }) {
+  const videoSrc = useBaseUrl(module.video);
+  return (
+    <Link to={module.link} key={module.number} className={styles.moduleCard}>
+      <div className={styles.cardVideoWrapper}>
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className={styles.cardVideo}
+        >
+          <source src={videoSrc} type="video/mp4" />
+        </video>
+      </div>
+      <div className={styles.cardContent}>
+        <span className={styles.moduleNumber}>{module.number}</span>
+        <h3 className={styles.moduleTitle}>{module.title}</h3>
+        <span className={styles.moduleSubtitle}>{module.subtitle}</span>
+        <p className={styles.moduleDescription}>{module.description}</p>
+      </div>
+    </Link>
+  );
+}
+
 function ModulesSection() {
   return (
     <section className={styles.modules}>
@@ -137,25 +166,7 @@ function ModulesSection() {
       </div>
       <div className={styles.moduleGrid}>
         {modules.map((module) => (
-          <Link to={module.link} key={module.number} className={styles.moduleCard}>
-            <div className={styles.cardVideoWrapper}>
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                className={styles.cardVideo}
-              >
-                <source src={module.video} type="video/mp4" />
-              </video>
-            </div>
-            <div className={styles.cardContent}>
-              <span className={styles.moduleNumber}>{module.number}</span>
-              <h3 className={styles.moduleTitle}>{module.title}</h3>
-              <span className={styles.moduleSubtitle}>{module.subtitle}</span>
-              <p className={styles.moduleDescription}>{module.description}</p>
-            </div>
-          </Link>
+          <ModuleCard key={module.number} module={module} />
         ))}
       </div>
     </section>
