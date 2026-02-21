@@ -52,7 +52,7 @@
   position: absolute;
   top: calc(100% + 8px);
   right: 0;
-  width: 280px;
+  width: min(280px, calc(100vw - 32px));
   background: var(--ifm-background-surface-color);
   border: 1px solid var(--ifm-color-emphasis-200);
   border-radius: 12px;
@@ -155,14 +155,11 @@
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
+  width: 100%;
+  height: 100%;
   background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(4px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1100;
+  z-index: 9999;
   animation: fadeIn 0.2s ease;
 }
 
@@ -172,17 +169,19 @@
 }
 
 .modal {
+  position: fixed;
+  top: 10vh;
+  left: 50%;
+  transform: translateX(-50%);
   background: var(--ifm-background-surface-color);
   border: 1px solid var(--ifm-color-emphasis-200);
   border-radius: 12px;
   padding: 2rem;
-  width: 100%;
-  max-width: 420px;
-  max-height: 90vh;
+  width: min(90%, 420px);
+  max-height: 80vh;
   overflow-y: auto;
-  position: relative;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-  animation: slideUp 0.3s ease;
+  z-index: 10000;
 }
 
 @keyframes slideUp {
@@ -369,4 +368,48 @@
 
 .switchMode button:hover {
   text-decoration: underline;
+}
+
+/* Submit button loading state */
+.submitButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: var(--ifm-color-emphasis-400);
+}
+
+/* Better focus for modal inputs */
+.modal input:focus,
+.modal select:focus {
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+/* Mobile responsive */
+@media (max-width: 480px) {
+  .modal {
+    top: 5vh;
+    padding: 1.5rem;
+    border-radius: 10px;
+    width: 95%;
+  }
+
+  .dropdownEmail {
+    font-size: 0.75rem;
+  }
+
+  .formGroup input[type="text"],
+  .formGroup input[type="email"],
+  .formGroup input[type="password"],
+  .formGroup select {
+    padding: 0.75rem;
+    font-size: 16px;
+  }
+
+  .checkboxGroup {
+    gap: 0.4rem;
+  }
+
+  .checkbox {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.5rem;
+  }
 }

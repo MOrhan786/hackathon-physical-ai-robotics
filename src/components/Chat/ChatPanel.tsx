@@ -27,14 +27,8 @@ type PanelSize = 'small' | 'medium' | 'large';
 
 
 // -------------------------------------------------------------------------
-// API Configuration
-let API_URL = 'https://simple-hackathon-physical-ai-and-humanoid-roboti-production.up.railway.app' ;
-
-// Agar browser mein 'localhost' likha hai, to Local Backend use karo
-if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
-  API_URL = 'http://localhost:8000';
-}
-
+// API Configuration - always use HuggingFace Space backend
+const API_URL = 'https://mrsasif-hackathon1-c.hf.space';
 const API_KEY = 'password123';
 // -------------------------------------------------------------------------
 

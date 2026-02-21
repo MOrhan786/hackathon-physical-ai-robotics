@@ -5,7 +5,7 @@ import { AuthContext } from '@site/src/components/AuthContext';
 import { getSharedOriginalContent, setSharedOriginalContent } from './TranslationControl';
 import styles from './ContentControls.module.css';
 
-const API_URL = 'web-production-e1ceb.up.railway.app';
+const API_URL = 'https://mrsasif-hackathon1-c.hf.space';
 const API_KEY = 'password123';
 
 // Cache for personalized content per page + user background

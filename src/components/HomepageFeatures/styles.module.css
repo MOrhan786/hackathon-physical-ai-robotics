@@ -1,4 +1,4 @@
-/* src\components\HomepageFeatures\styles.module.css */
+/* src/components/HomepageFeatures/styles.module.css */
 .features {
   display: flex;
   align-items: center;
@@ -7,6 +7,24 @@
 }
 
 .featureSvg {
-  height: 200px;
-  width: 200px;
+  height: auto;
+  width: 100%;
+  max-width: 200px;
+  transition: transform 0.3s ease;
+}
+
+.featureSvg:hover {
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .featureSvg {
+    max-width: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .featureSvg {
+    max-width: 120px;
+  }
 }

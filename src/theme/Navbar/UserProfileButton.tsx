@@ -1,5 +1,6 @@
 // src\theme\Navbar\UserProfileButton.tsx
 import React, { useState, useContext, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { useColorMode } from '@docusaurus/theme-common';
 import { AuthContext } from '@site/src/components/AuthContext';
 import styles from './UserProfileButton.module.css';
@@ -12,10 +13,9 @@ interface BackgroundFormData {
 }
 
 export default function UserProfileButton(): JSX.Element {
-  const { user, isAuthenticated, login, signup, logout, updateBackground } = useContext(AuthContext);
+  const { user, isAuthenticated, login, signup, logout, updateBackground, showAuthModal, setShowAuthModal } = useContext(AuthContext);
   const { colorMode, setColorMode } = useColorMode();
   const [showDropdown, setShowDropdown] = useState(false);
-  const [showAuthModal, setShowAuthModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
   const [email, setEmail] = useState('');
@@ -247,46 +247,46 @@ export default function UserProfileButton(): JSX.Element {
         </div>
       )}
 
-      {/* Auth Modal */}
-      {showAuthModal && (
+      {/* Auth Modal - rendered via Portal to body */}
+      {showAuthModal && typeof document !== 'undefined' && createPortal(
         <div className={styles.modalOverlay} onClick={() => setShowAuthModal(false)}>
           <div className={styles.modal} onClick={e => e.stopPropagation()}>
             <button className={styles.closeButton} onClick={() => setShowAuthModal(false)}>×</button>
             <h2>{isSignup ? 'Create Account' : 'Welcome Back'}</h2>
-            
+
             <form onSubmit={handleAuthSubmit}>
               {isSignup && (
                 <div className={styles.formGroup}>
                   <label>Name</label>
-                  <input 
-                    type="text" 
-                    value={name} 
-                    onChange={e => { setName(e.target.value); setValidationErrors(prev => ({...prev, name: ''})); }} 
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={e => { setName(e.target.value); setValidationErrors(prev => ({...prev, name: ''})); }}
                     className={validationErrors.name ? styles.inputError : ''}
-                    placeholder="Your name" 
+                    placeholder="Your name"
                   />
                   {validationErrors.name && <span className={styles.fieldError}>{validationErrors.name}</span>}
                 </div>
               )}
               <div className={styles.formGroup}>
                 <label>Email</label>
-                <input 
-                  type="email" 
-                  value={email} 
-                  onChange={e => { setEmail(e.target.value); setValidationErrors(prev => ({...prev, email: ''})); }} 
+                <input
+                  type="email"
+                  value={email}
+                  onChange={e => { setEmail(e.target.value); setValidationErrors(prev => ({...prev, email: ''})); }}
                   className={validationErrors.email ? styles.inputError : ''}
-                  placeholder="your@email.com" 
+                  placeholder="your@email.com"
                 />
                 {validationErrors.email && <span className={styles.fieldError}>{validationErrors.email}</span>}
               </div>
               <div className={styles.formGroup}>
                 <label>Password {isSignup && <span className={styles.hint}>(min 6 chars, uppercase & lowercase)</span>}</label>
-                <input 
-                  type="password" 
-                  value={password} 
-                  onChange={e => { setPassword(e.target.value); setValidationErrors(prev => ({...prev, password: ''})); }} 
+                <input
+                  type="password"
+                  value={password}
+                  onChange={e => { setPassword(e.target.value); setValidationErrors(prev => ({...prev, password: ''})); }}
                   className={validationErrors.password ? styles.inputError : ''}
-                  placeholder="••••••••" 
+                  placeholder="••••••••"
                 />
                 {validationErrors.password && <span className={styles.fieldError}>{validationErrors.password}</span>}
               </div>
@@ -295,7 +295,7 @@ export default function UserProfileButton(): JSX.Element {
                 <>
                   <h3>Your Background</h3>
                   <p className={styles.hint}>Help us personalize your learning experience</p>
-                  
+
                   <div className={styles.formGroup}>
                     <label>Programming Experience</label>
                     <select value={background.programming_experience} onChange={e => setBackground(prev => ({ ...prev, programming_experience: e.target.value }))}>
@@ -304,7 +304,7 @@ export default function UserProfileButton(): JSX.Element {
                       <option value="advanced">Advanced</option>
                     </select>
                   </div>
-                  
+
                   <div className={styles.formGroup}>
                     <label>Robotics Experience</label>
                     <select value={background.robotics_experience} onChange={e => setBackground(prev => ({ ...prev, robotics_experience: e.target.value }))}>
@@ -313,16 +313,16 @@ export default function UserProfileButton(): JSX.Element {
                       <option value="professional">Professional</option>
                     </select>
                   </div>
-                  
+
                   <div className={styles.formGroup}>
                     <label>Programming Languages <span className={styles.required}>*</span></label>
                     <div className={styles.checkboxGroup}>
                       {['Python', 'C++', 'JavaScript', 'Rust', 'Java'].map(lang => (
                         <label key={lang} className={styles.checkbox}>
-                          <input 
-                            type="checkbox" 
-                            checked={background.preferred_languages.includes(lang)} 
-                            onChange={() => { toggleLanguage(lang); setValidationErrors(prev => ({...prev, languages: ''})); }} 
+                          <input
+                            type="checkbox"
+                            checked={background.preferred_languages.includes(lang)}
+                            onChange={() => { toggleLanguage(lang); setValidationErrors(prev => ({...prev, languages: ''})); }}
                           />
                           {lang}
                         </label>
@@ -330,7 +330,7 @@ export default function UserProfileButton(): JSX.Element {
                     </div>
                     {validationErrors.languages && <span className={styles.fieldError}>{validationErrors.languages}</span>}
                   </div>
-                  
+
                   <div className={styles.formGroup}>
                     <label>Hardware Access</label>
                     <div className={styles.checkboxGroup}>
@@ -348,7 +348,7 @@ export default function UserProfileButton(): JSX.Element {
               {error && <div className={styles.error}>{error}</div>}
               <button type="submit" className={styles.submitButton}>{isSignup ? 'Create Account' : 'Sign In'}</button>
             </form>
-            
+
             <div className={styles.switchMode}>
               {isSignup ? (
                 <>Already have an account? <button onClick={() => setIsSignup(false)}>Sign In</button></>
@@ -357,16 +357,17 @@ export default function UserProfileButton(): JSX.Element {
               )}
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
-      {/* Edit Profile Modal */}
-      {showEditModal && (
+      {/* Edit Profile Modal - rendered via Portal to body */}
+      {showEditModal && typeof document !== 'undefined' && createPortal(
         <div className={styles.modalOverlay} onClick={() => setShowEditModal(false)}>
           <div className={styles.modal} onClick={e => e.stopPropagation()}>
             <button className={styles.closeButton} onClick={() => setShowEditModal(false)}>×</button>
             <h2>Edit Profile</h2>
-            
+
             <form onSubmit={handleEditSubmit}>
               <div className={styles.formGroup}>
                 <label>Programming Experience</label>
@@ -376,7 +377,7 @@ export default function UserProfileButton(): JSX.Element {
                   <option value="advanced">Advanced</option>
                 </select>
               </div>
-              
+
               <div className={styles.formGroup}>
                 <label>Robotics Experience</label>
                 <select value={background.robotics_experience} onChange={e => setBackground(prev => ({ ...prev, robotics_experience: e.target.value }))}>
@@ -385,7 +386,7 @@ export default function UserProfileButton(): JSX.Element {
                   <option value="professional">Professional</option>
                 </select>
               </div>
-              
+
               <div className={styles.formGroup}>
                 <label>Programming Languages</label>
                 <div className={styles.checkboxGroup}>
@@ -397,7 +398,7 @@ export default function UserProfileButton(): JSX.Element {
                   ))}
                 </div>
               </div>
-              
+
               <div className={styles.formGroup}>
                 <label>Hardware Access</label>
                 <div className={styles.checkboxGroup}>
@@ -413,7 +414,8 @@ export default function UserProfileButton(): JSX.Element {
               <button type="submit" className={styles.submitButton}>Save Changes</button>
             </form>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );

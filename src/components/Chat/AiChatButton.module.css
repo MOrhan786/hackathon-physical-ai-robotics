@@ -23,6 +23,14 @@
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
 }
 
+[data-theme='dark'] .chatButton {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3), 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+[data-theme='dark'] .chatButton:hover {
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4), 0 0 2px rgba(255, 255, 255, 0.15);
+}
+
 .chatButton.active {
   background: var(--ifm-font-color-secondary);
   border-radius: 12px;

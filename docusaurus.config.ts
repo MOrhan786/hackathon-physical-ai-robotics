@@ -30,8 +30,8 @@ const config: Config = {
 
   // Custom fields for API configuration (used in your hooks)
   customFields: {
-    apiUrl: process.env.REACT_APP_API_URL || 'web-production-e1ceb.up.railway.app',
-    apiKey: process.env.REACT_APP_API_KEY || '',
+    apiUrl: process.env.REACT_APP_API_URL || 'https://mrsasif-hackathon1-c.hf.space',
+    apiKey: process.env.REACT_APP_API_KEY || 'password123',
   },
 
   presets: [

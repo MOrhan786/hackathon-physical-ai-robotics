@@ -4,7 +4,7 @@ import useIsBrowser from '@docusaurus/useIsBrowser';
 import { JSX } from 'react/jsx-runtime';
 
 // API Configuration
-const API_URL = 'web-production-e1ceb.up.railway.app/api';
+const API_URL = 'https://mrsasif-hackathon1-c.hf.space/api';
 const API_KEY = 'password123';
 
 // Helper function for mobile-friendly fetch with timeout
@@ -55,6 +55,8 @@ interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
   isLoading: boolean;
+  showAuthModal: boolean;
+  setShowAuthModal: (show: boolean) => void;
   login: (email: string, password: string) => Promise<void>;
   signup: (email: string, password: string, name: string, background: UserBackground) => Promise<void>;
   logout: () => void;
@@ -65,6 +67,8 @@ export const AuthContext = createContext<AuthContextType>({
   user: null,
   isAuthenticated: false,
   isLoading: true,
+  showAuthModal: false,
+  setShowAuthModal: () => {},
   login: async () => {},
   signup: async () => {},
   logout: () => {},
@@ -79,6 +83,7 @@ export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [sessionToken, setSessionToken] = useState<string | null>(null);
+  const [showAuthModal, setShowAuthModal] = useState(false);
   const isBrowser = useIsBrowser();
 
   useEffect(() => {
@@ -199,6 +204,8 @@ export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
         user,
         isAuthenticated: !!user,
         isLoading,
+        showAuthModal,
+        setShowAuthModal,
         login,
         signup,
         logout,
