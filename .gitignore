@@ -6,5 +6,4 @@ dist/
 build/
 .docusaurus/
 venv/
-.claude/
 .DS_Store
