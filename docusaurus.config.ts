@@ -8,6 +8,31 @@ const config: Config = {
   tagline: 'Bridging the gap between the digital brain and the physical body',
   favicon: 'img/favicon.ico',
 
+  headTags: [
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'preconnect',
+        href: 'https://fonts.googleapis.com',
+      },
+    },
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'preconnect',
+        href: 'https://fonts.gstatic.com',
+        crossorigin: 'anonymous',
+      },
+    },
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'stylesheet',
+        href: 'https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap',
+      },
+    },
+  ],
+
   // Set the production url of your site here
   url: 'https://morhan786.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
@@ -58,7 +83,7 @@ const config: Config = {
     // We handle dark mode toggle in the UserProfileButton, 
     // but we keep respectPrefersColorScheme true
     colorMode: {
-      defaultMode: 'light',
+      defaultMode: 'dark',
       disableSwitch: true, 
       respectPrefersColorScheme: true,
     },
@@ -109,7 +134,7 @@ const config: Config = {
       ],
     },
     footer: {
-      style: 'light', // Matches your modern theme better
+      style: 'dark',
       links: [
         {
           title: 'Course Material',
