@@ -1,49 +1,68 @@
 /* src/css/custom.css */
 /**
- * Modern Tech Theme
- * Premium look with gradients, glassmorphism, and soft shadows
+ * Cyberpunk Neon Theme
+ * Green/Gold/Blue neon aesthetic with glassmorphism and glow effects
  */
 
+/* ============================================
+   ROOT VARIABLES - Light Mode
+   ============================================ */
 :root {
-  /* Modern Indigo/Violet Primary */
-  --ifm-color-primary: #6366f1;
-  --ifm-color-primary-dark: #4f46e5;
-  --ifm-color-primary-darker: #4338ca;
-  --ifm-color-primary-darkest: #3730a3;
-  --ifm-color-primary-light: #818cf8;
-  --ifm-color-primary-lighter: #a5b4fc;
-  --ifm-color-primary-lightest: #c7d2fe;
+  /* Cyberpunk Green Primary */
+  --ifm-color-primary: #16a34a;
+  --ifm-color-primary-dark: #15803d;
+  --ifm-color-primary-darker: #166534;
+  --ifm-color-primary-darkest: #14532d;
+  --ifm-color-primary-light: #22c55e;
+  --ifm-color-primary-lighter: #4ade80;
+  --ifm-color-primary-lightest: #86efac;
+
+  /* Cyberpunk Accent Colors */
+  --pai-color-accent: #d4a035;
+  --pai-color-secondary: #2496b8;
 
   /* Backgrounds */
   --ifm-background-color: #ffffff;
   --ifm-background-surface-color: #ffffff;
-  --ifm-navbar-background-color: rgba(255, 255, 255, 0.8);
+  --ifm-navbar-background-color: rgba(255, 255, 255, 0.85);
 
   /* Spacing & Layout */
   --ifm-global-radius: 12px;
   --ifm-card-border-radius: 12px;
   --ifm-navbar-height: 64px;
 
-  /* Modern Shadows */
+  /* Shadows */
   --ifm-global-shadow-lw: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
   --ifm-global-shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
 
-  /* Fonts & Typography */
-  --ifm-font-family-base: 'Inter', system-ui, -apple-system, sans-serif;
+  /* Fonts - Cyberpunk Stack */
+  --ifm-font-family-base: 'Space Grotesk', system-ui, -apple-system, sans-serif;
   --ifm-heading-font-weight: 700;
   --ifm-line-height-base: 1.6;
+  --pai-font-display: 'Orbitron', 'Space Grotesk', sans-serif;
+  --pai-font-ui: 'Rajdhani', 'Space Grotesk', sans-serif;
 
   /* Link colors */
   --ifm-link-color: var(--ifm-color-primary-dark);
   --ifm-link-hover-color: var(--ifm-color-primary-darkest);
 }
 
-/* Dark Mode */
+/* ============================================
+   DARK MODE - Cyberpunk Core
+   ============================================ */
 [data-theme='dark'] {
-  --ifm-color-primary: #818cf8;
-  --ifm-background-color: #0f172a;
-  --ifm-background-surface-color: #1e293b;
-  --ifm-navbar-background-color: rgba(15, 23, 42, 0.85);
+  --ifm-color-primary: #22c55e;
+  --ifm-color-primary-dark: #16a34a;
+  --ifm-color-primary-darker: #15803d;
+  --ifm-color-primary-darkest: #166534;
+  --ifm-color-primary-light: #4ade80;
+  --ifm-color-primary-lighter: #86efac;
+  --ifm-color-primary-lightest: #bbf7d0;
+
+  --ifm-background-color: #0a0e1a;
+  --ifm-background-surface-color: #111827;
+  --ifm-navbar-background-color: rgba(10, 14, 26, 0.85);
+
   --ifm-link-color: var(--ifm-color-primary-light);
   --ifm-link-hover-color: var(--ifm-color-primary-lighter);
 }
@@ -51,6 +70,18 @@
 /* Smooth theme transition */
 html {
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ============================================
+   TYPOGRAPHY - Cyberpunk Fonts
+   ============================================ */
+h1, h2 {
+  font-family: var(--pai-font-display);
+  letter-spacing: 0.01em;
+}
+
+h3, h4 {
+  font-family: var(--pai-font-ui);
 }
 
 /* Responsive Typography */
@@ -63,19 +94,126 @@ html {
   }
 }
 
-/* Headings */
-h1, h2 {
-  letter-spacing: -0.02em;
+/* ============================================
+   TEXT SELECTION - Green Highlight
+   ============================================ */
+::selection {
+  background: rgba(22, 163, 74, 0.35);
+  color: inherit;
 }
 
-/* NAVBAR - Glass Effect */
+[data-theme='dark'] ::selection {
+  background: rgba(34, 197, 94, 0.4);
+}
+
+/* ============================================
+   CUSTOM SCROLLBAR - Cyberpunk Green
+   ============================================ */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(22, 163, 74, 0.4);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(22, 163, 74, 0.7);
+}
+
+[data-theme='dark'] ::-webkit-scrollbar-thumb {
+  background: rgba(34, 197, 94, 0.3);
+}
+
+[data-theme='dark'] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(34, 197, 94, 0.6);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(22, 163, 74, 0.4) transparent;
+}
+
+[data-theme='dark'] * {
+  scrollbar-color: rgba(34, 197, 94, 0.3) transparent;
+}
+
+/* ============================================
+   BACKGROUND - Floating Neon Orbs + Grid (Dark Mode)
+   ============================================ */
+[data-theme='dark'] body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse 600px 600px at 10% 20%, rgba(22, 163, 74, 0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 500px 500px at 80% 60%, rgba(36, 150, 184, 0.05) 0%, transparent 70%),
+    radial-gradient(ellipse 400px 400px at 50% 90%, rgba(212, 160, 53, 0.04) 0%, transparent 70%);
+}
+
+[data-theme='dark'] body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  background-image:
+    linear-gradient(rgba(34, 197, 94, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 197, 94, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* ============================================
+   NAVBAR - Glass Effect + Green Glow
+   ============================================ */
 .navbar {
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(22, 163, 74, 0.15);
+  transition: border-color 0.3s ease;
 }
 
-/* CARDS - Modern Card Style */
+[data-theme='dark'] .navbar {
+  border-bottom: 1px solid rgba(34, 197, 94, 0.2);
+  box-shadow: 0 1px 20px rgba(34, 197, 94, 0.05);
+}
+
+.navbar__title {
+  font-family: var(--pai-font-display);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-size: 1.1rem;
+}
+
+[data-theme='dark'] .navbar__title {
+  text-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
+}
+
+.navbar__link {
+  font-family: var(--pai-font-ui);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+/* ============================================
+   CARDS - Neon Green Glow on Hover
+   ============================================ */
 .card {
   border: 1px solid var(--ifm-color-emphasis-200);
   box-shadow: var(--ifm-global-shadow-lw);
@@ -88,29 +226,48 @@ h1, h2 {
   border-color: var(--ifm-color-primary);
 }
 
+[data-theme='dark'] .card:hover {
+  border-color: rgba(34, 197, 94, 0.5);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.3),
+    0 0 15px rgba(34, 197, 94, 0.1);
+}
+
 @media (max-width: 768px) {
   .card:hover {
     transform: translateY(-2px);
   }
 }
 
-/* BUTTONS - Modern Pills */
+/* ============================================
+   BUTTONS - Green Gradient Shadows
+   ============================================ */
 .button {
   border-radius: 50px;
+  font-family: var(--pai-font-ui);
   font-weight: 600;
   padding: 0.6rem 1.5rem;
   transition: all 0.2s ease;
+  letter-spacing: 0.02em;
 }
 
 .button--primary {
   background: linear-gradient(135deg, var(--ifm-color-primary) 0%, var(--ifm-color-primary-dark) 100%);
   border: none;
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
 }
 
 .button--primary:hover {
-  box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);
+  box-shadow: 0 6px 20px rgba(22, 163, 74, 0.45);
   transform: translateY(-1px);
+}
+
+[data-theme='dark'] .button--primary {
+  box-shadow: 0 4px 15px rgba(34, 197, 94, 0.25);
+}
+
+[data-theme='dark'] .button--primary:hover {
+  box-shadow: 0 6px 25px rgba(34, 197, 94, 0.4);
 }
 
 /* Focus styles for accessibility */
@@ -123,17 +280,57 @@ h1, h2 {
   outline-color: white;
 }
 
-/* SIDEBAR & DOCS */
-.menu__link {
-  border-radius: 8px;
-}
-
+/* ============================================
+   CODE BLOCKS - Green Border Glow (Dark Mode)
+   ============================================ */
 .markdown pre {
   border-radius: 12px;
   border: 1px solid var(--ifm-color-emphasis-200);
 }
 
-/* Reduced motion support */
+[data-theme='dark'] .markdown pre {
+  border-color: rgba(34, 197, 94, 0.15);
+  box-shadow: 0 0 15px rgba(34, 197, 94, 0.05);
+}
+
+/* ============================================
+   SIDEBAR & DOCS
+   ============================================ */
+.menu__link {
+  border-radius: 8px;
+  font-family: var(--pai-font-ui);
+}
+
+.menu__link--active {
+  font-weight: 600;
+}
+
+[data-theme='dark'] .menu__link--active:not(.menu__link--sublist) {
+  background: rgba(34, 197, 94, 0.1);
+}
+
+/* ============================================
+   FOOTER - Green Border + Dark Gradient
+   ============================================ */
+.footer {
+  border-top: 1px solid rgba(22, 163, 74, 0.2);
+}
+
+[data-theme='dark'] .footer {
+  border-top: 1px solid rgba(34, 197, 94, 0.25);
+  background: linear-gradient(180deg, #0d1117 0%, #0a0e1a 100%);
+}
+
+.footer__title {
+  font-family: var(--pai-font-ui);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+/* ============================================
+   REDUCED MOTION SUPPORT
+   ============================================ */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
